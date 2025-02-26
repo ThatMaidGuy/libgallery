@@ -1,6 +1,6 @@
 module github.com/WheatleyHDD/libgallery
 
-go 1.17
+go 1.21
 
 require (
 	github.com/gabriel-vasile/mimetype v1.4.0
