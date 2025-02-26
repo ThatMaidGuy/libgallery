@@ -20,11 +20,13 @@ type implementation struct {
 	client *http.Client
 }
 
-func New() libgallery.Driver {
+func New(name string, host string) libgallery.Driver {
 	client := retryablehttp.NewClient()
 	client.Logger = &internal.NoLogger{}
 	return &implementation{
 		client: client.StandardClient(),
+		name:   name,
+		host:   host,
 	}
 }
 
