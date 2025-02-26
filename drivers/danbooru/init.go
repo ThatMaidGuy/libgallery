@@ -1,6 +1,6 @@
 package danbooru
 
-import "spiderden.net/go/libgallery"
+import "github.com/WheatleyHDD/libgallery"
 
 func init() {
 	libgallery.Register("danbooru", New("Danbooru", "danbooru.donmai.us"))

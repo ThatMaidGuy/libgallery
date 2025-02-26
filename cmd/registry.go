@@ -1,5 +1,5 @@
 package main
 
 import (
-	_ "spiderden.net/go/libgallery/drivers"
+	_ "github.com/WheatleyHDD/libgallery/drivers"
 )

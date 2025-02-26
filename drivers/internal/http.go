@@ -81,7 +81,7 @@ func GetXML(url string, h *http.Client, target interface{}) error {
 	dc := xml.NewDecoder(response)
 	dc.Strict = false
 
-	dc.Decode(target)
+	err = dc.Decode(target)
 	if err != nil {
 		return err
 	}

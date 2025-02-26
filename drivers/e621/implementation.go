@@ -9,10 +9,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/WheatleyHDD/libgallery"
+	"github.com/WheatleyHDD/libgallery/drivers/internal"
 	"github.com/hashicorp/go-retryablehttp"
 	"golang.org/x/time/rate"
-	"spiderden.net/go/libgallery"
-	"spiderden.net/go/libgallery/drivers/internal"
 )
 
 func New() libgallery.Driver {

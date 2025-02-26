@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/WheatleyHDD/libgallery"
 	"github.com/integrii/flaggy"
-	"spiderden.net/go/libgallery"
 )
 
 var driversel string

@@ -1,4 +1,4 @@
-package rule34
+package gelbooru
 
 import (
 	"fmt"
@@ -15,6 +15,8 @@ import (
 )
 
 type implementation struct {
+	host   string
+	name   string
 	client *http.Client
 }
 
@@ -31,8 +33,8 @@ func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, e
 		return []libgallery.Post{}, nil
 	}
 
-	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&tags=%s&pid=%v"
-	url := fmt.Sprintf(reqbase, url.QueryEscape(query), page)
+	const reqbase = "https://%s/index.php?page=dapi&s=post&q=index&tags=%s&pid=%v"
+	url := fmt.Sprintf(reqbase, i.host, url.QueryEscape(query), page)
 
 	var response searchResponse
 	err := internal.GetXML(url, i.client, &response)
@@ -65,7 +67,7 @@ func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, e
 		}
 
 		posts = append(posts, libgallery.Post{
-			URL:    fmt.Sprintf("https://rule34.xxx/index.php?page=post&s=view&id=%v", v.ID),
+			URL:    fmt.Sprintf("https://%s/index.php?page=post&s=view&id=%v", i.host, v.ID),
 			Tags:   strings.TrimSpace(v.Tags),
 			Date:   ptime,
 			Source: source,
@@ -79,10 +81,10 @@ func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, e
 }
 
 func (i *implementation) File(id string) (libgallery.Files, error) {
-	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&id="
+	const reqbase = "https://%s/index.php?page=dapi&s=post&q=index&id="
 
 	var response searchResponse
-	err := internal.GetXML(reqbase+id, i.client, &response)
+	err := internal.GetXML(fmt.Sprintf(reqbase, i.host)+id, i.client, &response)
 	if err != nil {
 		return []io.ReadCloser{}, err
 	}
@@ -101,7 +103,7 @@ func (i *implementation) File(id string) (libgallery.Files, error) {
 }
 
 func (i *implementation) Name() string {
-	return "rule34.xxx"
+	return i.name
 }
 
 // Comments are broken on the API, I tried asking on their Discord

@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/WheatleyHDD/libgallery"
+	"github.com/WheatleyHDD/libgallery/drivers/internal"
 	"github.com/hashicorp/go-retryablehttp"
-	"spiderden.net/go/libgallery"
-	"spiderden.net/go/libgallery/drivers/internal"
 )
 
 type implementation struct {

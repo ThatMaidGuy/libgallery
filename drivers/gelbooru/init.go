@@ -1,7 +1,7 @@
-package rule34
+package gelbooru
 
 import "github.com/WheatleyHDD/libgallery"
 
 func init() {
-	libgallery.Register("rule34", New())
+	libgallery.Register("gelbooru", New())
 }

@@ -3,7 +3,7 @@
 package drivers
 
 import (
-	_ "spiderden.net/go/libgallery/drivers/danbooru"
-	_ "spiderden.net/go/libgallery/drivers/e621"
-	_ "spiderden.net/go/libgallery/drivers/rule34"
+	_ "github.com/WheatleyHDD/libgallery/drivers/danbooru"
+	_ "github.com/WheatleyHDD/libgallery/drivers/e621"
+	_ "github.com/WheatleyHDD/libgallery/drivers/rule34"
 )

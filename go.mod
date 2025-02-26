@@ -1,4 +1,4 @@
-module spiderden.net/go/libgallery
+module github.com/WheatleyHDD/libgallery
 
 go 1.17
 

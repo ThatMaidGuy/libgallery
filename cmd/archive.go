@@ -7,8 +7,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/WheatleyHDD/libgallery"
 	"github.com/gabriel-vasile/mimetype"
-	"spiderden.net/go/libgallery"
 )
 
 func implArchive(dname string, driver libgallery.Driver, query string, limit uint64) {

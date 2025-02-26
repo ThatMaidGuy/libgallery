@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"spiderden.net/go/libgallery"
+	"github.com/WheatleyHDD/libgallery"
 )
 
 const searchPrintString = `ID: %v
