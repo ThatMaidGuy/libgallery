@@ -26,9 +26,9 @@ func New() libgallery.Driver {
 	}
 }
 
-func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
-	if page > 2000 {
-		return []libgallery.Post{}, nil
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, int, error) {
+	if page > 200000/limit {
+		return []libgallery.Post{}, 0, nil
 	}
 
 	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&limit=%v&tags=%s&pid=%v"
@@ -37,13 +37,13 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 	var response searchResponse
 	err := internal.GetXML(url, i.client, &response)
 	if err != nil {
-		return []libgallery.Post{}, err
+		return []libgallery.Post{}, 0, err
 	}
 
 	/* The rule34.xxx API only has a success
 	   value if there was an error. */
 	if response.Success != nil {
-		return []libgallery.Post{}, response.Error
+		return []libgallery.Post{}, 0, response.Error
 	}
 
 	var posts []libgallery.Post
@@ -51,7 +51,7 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 	for _, v := range response.Posts {
 		ptime, err := time.Parse("Mon Jan 2 15:04:05 -0700 2006", v.CreatedAt)
 		if err != nil {
-			return []libgallery.Post{}, err
+			return []libgallery.Post{}, 0, err
 		}
 
 		var source []string
@@ -61,7 +61,7 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 
 		score, err := strconv.ParseInt(v.Score, 10, 64)
 		if err != nil {
-			return []libgallery.Post{}, err
+			return []libgallery.Post{}, 0, err
 		}
 
 		posts = append(posts, libgallery.Post{
@@ -75,7 +75,9 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 		})
 	}
 
-	return posts, err
+	postsCount, _ := strconv.Atoi(response.Count)
+
+	return posts, postsCount, err
 }
 
 func (i *implementation) File(id string) (libgallery.Files, error) {

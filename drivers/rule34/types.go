@@ -12,5 +12,6 @@ type post struct {
 type searchResponse struct {
 	Success *bool  `xml:"success,attr"`
 	Error   error  `xml:"reason,attr"`
+	Count   string `xml:"count,attr"`
 	Posts   []post `xml:"post"`
 }

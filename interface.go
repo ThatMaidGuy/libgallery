@@ -17,9 +17,9 @@ type Driver interface {
 	// Search() can only accept space-separated snake-case tags.
 	// If a booru doesn't support it you will need to
 	// transmogrify the query.
-	Search(string, uint64, uint64) ([]Post, error) // Tags, page number, limit.
-	File(string) (Files, error)                    // Fetches a file with a given ID.
-	Comments(string) ([]Comment, error)            // Fetches the comments from a given ID.
+	Search(string, uint64, uint64) ([]Post, int, error) // Tags, page number, limit.
+	File(string) (Files, error)                         // Fetches a file with a given ID.
+	Comments(string) ([]Comment, error)                 // Fetches the comments from a given ID.
 }
 
 // Post has various fields for what a post may contain.

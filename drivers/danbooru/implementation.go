@@ -36,7 +36,7 @@ func New(name string, host string) libgallery.Driver {
 	}
 }
 
-func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, int, error) {
 	const reqbase = "https://%s/posts.json?tags=%s&page=%v&limit=%v"
 	url := fmt.Sprintf(reqbase, i.host, url.QueryEscape(query), page+1, limit)
 
@@ -45,12 +45,12 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 	if err != nil {
 		if herr, ok := err.(*internal.HTTPError); ok {
 			if herr.Code() == http.StatusGone {
-				return []libgallery.Post{}, nil
+				return []libgallery.Post{}, 0, nil
 			} else {
-				return []libgallery.Post{}, err
+				return []libgallery.Post{}, 0, err
 			}
 		} else {
-			return []libgallery.Post{}, err
+			return []libgallery.Post{}, 0, err
 		}
 	}
 
@@ -59,7 +59,7 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 	for _, v := range response {
 		ptime, err := time.Parse(time.RFC3339, v.CreatedAt)
 		if err != nil {
-			return []libgallery.Post{}, err
+			return []libgallery.Post{}, 0, err
 		}
 		posts = append(posts, libgallery.Post{
 			URL:      fmt.Sprintf("https://%v/posts/%v", i.host, v.ID),
@@ -73,7 +73,7 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 		})
 	}
 
-	return posts, err
+	return posts, 0, err
 }
 
 func (i *implementation) File(id string) (libgallery.Files, error) {

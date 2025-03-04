@@ -32,7 +32,7 @@ func implSearch(impl libgallery.Driver, query string, limit uint64) {
 	var notfirst bool
 
 	for i = 0; loopfunc(); i++ {
-		result, err := impl.Search(query, i, 100)
+		result, _, err := impl.Search(query, i, 100)
 		if err != nil {
 			panic(err)
 		}

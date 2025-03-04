@@ -35,7 +35,7 @@ func implArchive(dname string, driver libgallery.Driver, query string, limit uin
 	}
 
 	for i = 0; loopfunc(); {
-		result, err := driver.Search(query, i, 100)
+		result, _, err := driver.Search(query, i, 100)
 		if err != nil {
 			panic(err)
 		}

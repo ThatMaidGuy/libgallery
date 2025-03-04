@@ -34,7 +34,7 @@ func (i *implementation) getJSON(url string, h *http.Client, target interface{})
 	return internal.GetJSON(url, h, target)
 }
 
-func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, int, error) {
 	const reqbase = "https://e621.net/posts.json?tags=%s&page=%v&limit=%v"
 	url := fmt.Sprintf(reqbase, url.QueryEscape(query), page+1, limit)
 
@@ -46,12 +46,12 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 	if err != nil {
 		if herr, ok := err.(*internal.HTTPError); ok {
 			if herr.Code() == http.StatusGone {
-				return []libgallery.Post{}, nil
+				return []libgallery.Post{}, 0, nil
 			} else {
-				return []libgallery.Post{}, err
+				return []libgallery.Post{}, 0, err
 			}
 		} else {
-			return []libgallery.Post{}, err
+			return []libgallery.Post{}, 0, err
 		}
 	}
 
@@ -60,7 +60,7 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 	for _, v := range response.Posts {
 		ptime, err := time.Parse(time.RFC3339, v.CreatedAt)
 		if err != nil {
-			return libposts, err
+			return libposts, 0, err
 		}
 		libposts = append(libposts, libgallery.Post{
 			URL:         fmt.Sprintf("https://e621.net/posts/%v", v.ID),
@@ -75,7 +75,7 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 		})
 	}
 
-	return libposts, err
+	return libposts, 0, err
 }
 
 func (i *implementation) File(id string) (libgallery.Files, error) {
