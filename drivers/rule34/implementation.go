@@ -26,13 +26,13 @@ func New() libgallery.Driver {
 	}
 }
 
-func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, error) {
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
 	if page > 2000 {
 		return []libgallery.Post{}, nil
 	}
 
-	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&tags=%s&pid=%v"
-	url := fmt.Sprintf(reqbase, url.QueryEscape(query), page)
+	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&limit=%v&tags=%s&pid=%v"
+	url := fmt.Sprintf(reqbase, limit, url.QueryEscape(query), page)
 
 	var response searchResponse
 	err := internal.GetXML(url, i.client, &response)

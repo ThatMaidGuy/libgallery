@@ -36,9 +36,9 @@ func New(name string, host string) libgallery.Driver {
 	}
 }
 
-func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, error) {
-	const reqbase = "https://%s/posts.json?tags=%s&page=%v"
-	url := fmt.Sprintf(reqbase, i.host, url.QueryEscape(query), page+1)
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
+	const reqbase = "https://%s/posts.json?tags=%s&page=%v&limit=%v"
+	url := fmt.Sprintf(reqbase, i.host, url.QueryEscape(query), page+1, limit)
 
 	var response []post
 	err := internal.GetJSON(url, i.client, &response)

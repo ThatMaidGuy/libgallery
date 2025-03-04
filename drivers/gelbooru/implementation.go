@@ -30,13 +30,13 @@ func New(name string, host string) libgallery.Driver {
 	}
 }
 
-func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, error) {
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
 	if page > 2000 {
 		return []libgallery.Post{}, nil
 	}
 
-	const reqbase = "https://%s/index.php?page=dapi&s=post&q=index&tags=%s&pid=%v"
-	url := fmt.Sprintf(reqbase, i.host, url.QueryEscape(query), page)
+	const reqbase = "https://%s/index.php?page=dapi&s=post&q=index&limit=%v&tags=%s&pid=%v"
+	url := fmt.Sprintf(reqbase, i.host, limit, url.QueryEscape(query), page)
 
 	var response searchResponse
 	err := internal.GetXML(url, i.client, &response)

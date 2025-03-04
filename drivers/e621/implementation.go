@@ -34,9 +34,9 @@ func (i *implementation) getJSON(url string, h *http.Client, target interface{})
 	return internal.GetJSON(url, h, target)
 }
 
-func (i *implementation) Search(query string, page uint64) ([]libgallery.Post, error) {
-	const reqbase = "https://e621.net/posts.json?tags=%s&page=%v"
-	url := fmt.Sprintf(reqbase, url.QueryEscape(query), page+1)
+func (i *implementation) Search(query string, page uint64, limit uint64) ([]libgallery.Post, error) {
+	const reqbase = "https://e621.net/posts.json?tags=%s&page=%v&limit=%v"
+	url := fmt.Sprintf(reqbase, url.QueryEscape(query), page+1, limit)
 
 	var response struct {
 		Posts []post `json:"posts"`
