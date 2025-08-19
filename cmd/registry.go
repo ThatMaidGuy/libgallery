@@ -1,5 +1,5 @@
 package main
 
 import (
-	_ "github.com/WheatleyHDD/libgallery/drivers"
+	_ "github.com/ThatMaidGuy/libgallery/drivers"
 )

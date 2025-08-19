@@ -3,7 +3,7 @@
 package drivers
 
 import (
-	_ "github.com/WheatleyHDD/libgallery/drivers/danbooru"
-	_ "github.com/WheatleyHDD/libgallery/drivers/e621"
-	_ "github.com/WheatleyHDD/libgallery/drivers/rule34"
+	_ "github.com/ThatMaidGuy/libgallery/drivers/danbooru"
+	_ "github.com/ThatMaidGuy/libgallery/drivers/e621"
+	_ "github.com/ThatMaidGuy/libgallery/drivers/rule34"
 )

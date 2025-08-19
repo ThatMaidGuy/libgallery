@@ -1,6 +1,6 @@
 package danbooru
 
-import "github.com/WheatleyHDD/libgallery"
+import "github.com/ThatMaidGuy/libgallery"
 
 func init() {
 	libgallery.Register("danbooru", New("Danbooru", "danbooru.donmai.us"))

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/WheatleyHDD/libgallery"
-	"github.com/WheatleyHDD/libgallery/drivers/internal"
+	"github.com/ThatMaidGuy/libgallery"
+	"github.com/ThatMaidGuy/libgallery/drivers/internal"
 	"github.com/hashicorp/go-retryablehttp"
 )
 

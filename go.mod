@@ -1,4 +1,4 @@
-module github.com/WheatleyHDD/libgallery
+module github.com/ThatMaidGuy/libgallery
 
 go 1.21
 

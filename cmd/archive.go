@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/WheatleyHDD/libgallery"
+	"github.com/ThatMaidGuy/libgallery"
 	"github.com/gabriel-vasile/mimetype"
 )
 

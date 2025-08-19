@@ -1,7 +1,7 @@
 package rule34
 
-import "github.com/WheatleyHDD/libgallery"
+import "github.com/ThatMaidGuy/libgallery"
 
 func init() {
-	libgallery.Register("rule34", New())
+	libgallery.Register("rule34", New(""))
 }

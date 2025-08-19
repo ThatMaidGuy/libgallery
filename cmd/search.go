@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/WheatleyHDD/libgallery"
+	"github.com/ThatMaidGuy/libgallery"
 )
 
 const searchPrintString = `ID: %v
