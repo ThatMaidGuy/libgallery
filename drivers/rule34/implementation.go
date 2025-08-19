@@ -15,14 +15,16 @@ import (
 )
 
 type implementation struct {
-	client *http.Client
+	client        *http.Client
+	ApiAccessCred string
 }
 
-func New() libgallery.Driver {
+func New(apiAccess string) libgallery.Driver {
 	client := retryablehttp.NewClient()
 	client.Logger = &internal.NoLogger{}
 	return &implementation{
-		client: client.StandardClient(),
+		client:        client.StandardClient(),
+		ApiAccessCred: apiAccess,
 	}
 }
 
@@ -31,8 +33,8 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 		return []libgallery.Post{}, 0, nil
 	}
 
-	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&limit=%v&tags=%s&pid=%v"
-	url := fmt.Sprintf(reqbase, limit, url.QueryEscape(query), page)
+	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index%s&limit=%v&tags=%s&pid=%v"
+	url := fmt.Sprintf(reqbase, i.ApiAccessCred, limit, url.QueryEscape(query), page)
 
 	var response searchResponse
 	err := internal.GetXML(url, i.client, &response)
@@ -81,10 +83,10 @@ func (i *implementation) Search(query string, page uint64, limit uint64) ([]libg
 }
 
 func (i *implementation) File(id string) (libgallery.Files, error) {
-	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&id="
+	const reqbase = "https://api.rule34.xxx/index.php?page=dapi&s=post&q=index%s&id="
 
 	var response searchResponse
-	err := internal.GetXML(reqbase+id, i.client, &response)
+	err := internal.GetXML(fmt.Sprintf(reqbase, i.ApiAccessCred)+id, i.client, &response)
 	if err != nil {
 		return []io.ReadCloser{}, err
 	}
